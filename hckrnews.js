@@ -5,7 +5,7 @@ function copyToClipboard(text) {
     // cant copy when adding below this code
     // dummy.style.display = 'none'
     document.body.appendChild(dummy);
-    //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+    // Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
     dummy.value = text;
     dummy.select();
     document.execCommand("copy");
@@ -13,7 +13,7 @@ function copyToClipboard(text) {
 }
 
 
-function myScript() {
+function collectCheckedCheckboxesAndCopyThemToClipboard() {
     var checkboxes = document.querySelectorAll(".hckr-checkbox-save");
     hckrnewsLinks = []
     for (var checkbox of checkboxes.values()) {
@@ -27,15 +27,12 @@ function myScript() {
             hckrnewsLinks.push(`${articleName.trim()} ${articleLink} ${hnLink}`)
         }
     }
-
     copyToClipboard(hckrnewsLinks.join("\n"))
-
-
 }
 
 
 
-function changeCheckboxBackground() {
+function changeSelectedRowBackground() {
     if (this.checked)
         this.parentElement.setAttribute("style", "background-color: #c7c7bf;");
     else
@@ -45,7 +42,7 @@ function changeCheckboxBackground() {
 // Create "Copy links" button
 var button = document.createElement('button');
 button.innerHTML = "Copy links";
-button.addEventListener("click", myScript);
+button.addEventListener("click", collectCheckedCheckboxesAndCopyThemToClipboard);
 
 // Add button to menu
 var menu = document.querySelector(".menu.row")
@@ -58,6 +55,6 @@ for (var value of posts.values()) {
     checkbox.type = "checkbox";
     checkbox.name = "copy-checkbox";
     checkbox.className = "hckr-checkbox-save";
-    checkbox.addEventListener("change", changeCheckboxBackground);
+    checkbox.addEventListener("change", changeSelectedRowBackground);
     value.appendChild(checkbox);
 }
