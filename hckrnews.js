@@ -31,30 +31,35 @@ function collectCheckedCheckboxesAndCopyThemToClipboard() {
 }
 
 
-
 function changeSelectedRowBackground() {
     if (this.checked)
-        this.parentElement.setAttribute("style", "background-color: #c7c7bf;");
+        this.parentElement.setAttribute("style", "background-color: #c7c7bf; display:flex;");
     else
-        this.parentElement.setAttribute("style", "background-color: white;");
+        this.parentElement.setAttribute("style", "background-color: white; display:flex;");
 }
 
 // Create "Copy links" button
 var button = document.createElement('button');
 button.innerHTML = "Copy links";
+button.setAttribute("style", "position:fixed; left:20px; top:20px;");
 button.addEventListener("click", collectCheckedCheckboxesAndCopyThemToClipboard);
 
-// Add button to menu
-var menu = document.querySelector(".menu.row")
-menu.appendChild(button)
+// Add button to body
+document.body.appendChild(button)
 
 // To each post, append checkbox
 var posts = document.querySelectorAll(".entry.row")
+document.querySelectorAll(".span15").forEach(element => {
+    element.style.width = "auto"
+})
 for (var value of posts.values()) {
     var checkbox = document.createElement('input');
     checkbox.type = "checkbox";
     checkbox.name = "copy-checkbox";
     checkbox.className = "hckr-checkbox-save";
+
     checkbox.addEventListener("change", changeSelectedRowBackground);
-    value.appendChild(checkbox);
+
+    value.setAttribute("style", "display:flex;");
+    value.prepend(checkbox);
 }
