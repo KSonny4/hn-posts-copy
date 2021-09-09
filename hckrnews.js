@@ -62,8 +62,11 @@ document.body.appendChild(button)
 // Create "Clear checks" button
 var button = document.createElement('button');
 button.innerHTML = "Clear checks";
-button.setAttribute("style", "position:fixed; left:20px; top:40px;");
+button.setAttribute("style", "position:fixed; left:20px; top:60px;");
 button.addEventListener("click", clearChecks);
+
+// Add button to body
+document.body.appendChild(button)
 
 // To each post, append checkbox
 var posts = document.querySelectorAll(".entry.row")
