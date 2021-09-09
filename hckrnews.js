@@ -33,8 +33,14 @@ function collectCheckedCheckboxesAndCopyThemToClipboard() {
 function clearChecks() {
     var checkboxes = document.querySelectorAll(".hckr-checkbox-save");
     for (var checkbox of checkboxes.values()) {
-        checkbox.checked = false;
-        localStorage.removeItem(checkbox.id);
+        if (checkbox.checked) {
+
+            checkbox.checked = false;
+            localStorage.removeItem(checkbox.parentElement.id);
+
+            checkbox.parentElement.setAttribute("style", "background-color: white; display:flex;")
+        }
+
     }
 
 }
@@ -42,10 +48,10 @@ function clearChecks() {
 function changeSelectedRowBackgroundAndSaveToCookie() {
     if (this.checked) {
         this.parentElement.setAttribute("style", "background-color: #c7c7bf; display:flex;");
-        localStorage.setItem(this.id, true);
+        localStorage.setItem(this.parentElement.id, true);
     } else {
         this.parentElement.setAttribute("style", "background-color: white; display:flex;");
-        localStorage.removeItem(this.id);
+        localStorage.removeItem(this.parentElement.id);
     }
 }
 
