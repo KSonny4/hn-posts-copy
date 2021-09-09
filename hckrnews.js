@@ -1,5 +1,3 @@
-< script src = "https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js" > < /script>
-
 // https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
 function copyToClipboard(text) {
     var dummy = document.createElement("textarea");
@@ -34,17 +32,21 @@ function collectCheckedCheckboxesAndCopyThemToClipboard() {
 
 function clearChecks() {
     var checkboxes = document.querySelectorAll(".hckr-checkbox-save");
-    for (var checkbox of checkboxes.values())
-        checkbox.checked = false
+    for (var checkbox of checkboxes.values()) {
+        checkbox.checked = false;
+        localStorage.removeItem(checkbox.id);
+    }
+
 }
 
 function changeSelectedRowBackgroundAndSaveToCookie() {
-    if (this.checked)
+    if (this.checked) {
         this.parentElement.setAttribute("style", "background-color: #c7c7bf; display:flex;");
-    // TOOD save to cookie by id
-    else
+        localStorage.setItem(this.id, true);
+    } else {
         this.parentElement.setAttribute("style", "background-color: white; display:flex;");
-    // TOOD delete from cookie by id
+        localStorage.removeItem(this.id);
+    }
 }
 
 // Create "Copy links" button
@@ -59,7 +61,7 @@ document.body.appendChild(button)
 
 // Create "Clear checks" button
 var button = document.createElement('button');
-button.innerHTML = "CLear checks";
+button.innerHTML = "Clear checks";
 button.setAttribute("style", "position:fixed; left:20px; top:40px;");
 button.addEventListener("click", clearChecks);
 
@@ -78,9 +80,7 @@ for (var value of posts.values()) {
     checkbox.setAttribute("style", "margin-right:-15px; width:30px; height:30px")
     value.setAttribute("style", "display:flex;");
 
-
-    // TODO if checked in cookies, check it and change background
-    if (document.cookie[value.id].exists()) {
+    if (localStorage.getItem(value.id)) {
         checkbox.checked = true
         value.setAttribute("style", "background-color: #c7c7bf; display:flex;");
     }
