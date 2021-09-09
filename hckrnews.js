@@ -59,7 +59,7 @@ for (var value of posts.values()) {
     checkbox.className = "hckr-checkbox-save";
 
     checkbox.addEventListener("change", changeSelectedRowBackground);
-
+    checkbox.setAttribute("style", "margin-right:-15px; width:30px; height:30px")
     value.setAttribute("style", "display:flex;");
     value.prepend(checkbox);
 }
