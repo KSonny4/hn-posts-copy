@@ -30,12 +30,19 @@ function collectCheckedCheckboxesAndCopyThemToClipboard() {
     copyToClipboard(hckrnewsLinks.join("\n"))
 }
 
+function clearChecks() {
+    var checkboxes = document.querySelectorAll(".hckr-checkbox-save");
+    for (var checkbox of checkboxes.values())
+        checkbox.checked = false
+}
 
-function changeSelectedRowBackground() {
+function changeSelectedRowBackgroundAndSaveToCookie() {
     if (this.checked)
         this.parentElement.setAttribute("style", "background-color: #c7c7bf; display:flex;");
+    // TOOD save to cookie by id
     else
         this.parentElement.setAttribute("style", "background-color: white; display:flex;");
+    // TOOD delete from cookie by id
 }
 
 // Create "Copy links" button
@@ -46,6 +53,13 @@ button.addEventListener("click", collectCheckedCheckboxesAndCopyThemToClipboard)
 
 // Add button to body
 document.body.appendChild(button)
+
+
+// Create "Clear checks" button
+var button = document.createElement('button');
+button.innerHTML = "CLear checks";
+button.setAttribute("style", "position:fixed; left:20px; top:40px;");
+button.addEventListener("click", clearChecks);
 
 // To each post, append checkbox
 var posts = document.querySelectorAll(".entry.row")
@@ -58,8 +72,16 @@ for (var value of posts.values()) {
     checkbox.name = "copy-checkbox";
     checkbox.className = "hckr-checkbox-save";
 
-    checkbox.addEventListener("change", changeSelectedRowBackground);
+    checkbox.addEventListener("change", changeSelectedRowBackgroundAndSaveToCookie);
     checkbox.setAttribute("style", "margin-right:-15px; width:30px; height:30px")
     value.setAttribute("style", "display:flex;");
+
+
+    // TODO if checked in cookies, check it and change background
+    if (document.cookie[value.id].exists()) {
+        checkbox.checked = true
+        value.setAttribute("style", "background-color: #c7c7bf; display:flex;");
+    }
+
     value.prepend(checkbox);
 }
