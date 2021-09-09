@@ -1,3 +1,5 @@
+< script src = "https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js" > < /script>
+
 // https://stackoverflow.com/questions/33855641/copy-output-of-a-javascript-variable-to-the-clipboard
 function copyToClipboard(text) {
     var dummy = document.createElement("textarea");
